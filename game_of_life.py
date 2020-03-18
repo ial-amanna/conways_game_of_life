@@ -10,13 +10,11 @@ class Board(object):
       self.iteration = 0
    def display_at_prompt(self):
       i = self.iteration
-      while i<10:
+      while i<10: #runs for 10 life cycles, if more are needed, change this or remove this check
          i += 1
          self.engine.applyRules()
          print('Life Cycle: {} Birth: {} Survive: {}'.format(i, self.engine.born, self.engine.survived))
          yield self
-
-
 
 class Engine(object):
    def __init__(self, board):
@@ -40,13 +38,12 @@ class Engine(object):
       self.survived = survived
       return state
 
-#-------------------------------------------------------------------------
-
+#main program - in command line - specify the arguments
 def main():
    ap = argparse.ArgumentParser(add_help = False) # Intilialize Argument Parser
    ap.add_argument('height', help = 'Board Height', default = 256)
    ap.add_argument('width', help = 'Board Width', default = 256)
-   args = vars(ap.parse_args()) # Gather Arguments
+   args = vars(ap.parse_args())
    bHeight = int(args['height'])
    bWidth = int(args['width'])
    board = Board((bHeight,bWidth))
