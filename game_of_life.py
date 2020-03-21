@@ -43,8 +43,8 @@ class Work(object):
 #main program - in command line - specify the arguments
 def main():
    ap = argparse.ArgumentParser(add_help = False)
-   ap.add_argument('-h','--height', help = 'Board Height', default = 256)
-   ap.add_argument('-w','--width', help = 'Board Width', default = 256)
+   ap.add_argument('-h','--height', help = 'Board Height', default = 100)
+   ap.add_argument('-w','--width', help = 'Board Width', default = 100)
    args = vars(ap.parse_args()) 
    bHeight = int(args['height'])
    bWidth = int(args['width'])
