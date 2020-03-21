@@ -6,17 +6,18 @@ class Board(object):
    def __init__(self, size, seed = 'Random'):
       if seed == 'Random':
          self.state = np.random.randint(2, size = size)
-      self.engine = Engine(self)
+      self.work = Work(self)
       self.iteration = 0
    def display_at_prompt(self):
       i = self.iteration
       while i<10: #runs for 10 life cycles, if more are needed, change this or remove this check
          i += 1
-         self.engine.applyRules()
-         print('Life Cycle: {} Birth: {} Survive: {}'.format(i, self.engine.born, self.engine.survived))
-         yield self
+         self.work.applyRules()
+         print('Life Cycle: {} Birth: {} Survive: {}'.format(i, self.work.born, self.work.survived))
+         yield self #if output is needed one at a time this statement is needed, else if all at once is required, remove this
 
-class Engine(object):
+
+class Work(object):
    def __init__(self, board):
       self.state = board.state
    def countNeighbors(self):
@@ -38,19 +39,23 @@ class Engine(object):
       self.survived = survived
       return state
 
+
 #main program - in command line - specify the arguments
 def main():
-   ap = argparse.ArgumentParser(add_help = False) # Intilialize Argument Parser
-   ap.add_argument('height', help = 'Board Height', default = 256)
-   ap.add_argument('width', help = 'Board Width', default = 256)
-   args = vars(ap.parse_args())
+   ap = argparse.ArgumentParser(add_help = False)
+   ap.add_argument('-h','--height', help = 'Board Height', default = 256)
+   ap.add_argument('-w','--width', help = 'Board Width', default = 256)
+   args = vars(ap.parse_args()) 
    bHeight = int(args['height'])
    bWidth = int(args['width'])
    board = Board((bHeight,bWidth))
    for _ in board.display_at_prompt():
       time.sleep(1)
       pass
-#-------------------------------------------------------------------------
+
 
 if __name__ == '__main__':
-   main()
+	try:
+		main()
+	except:
+		KeyboardInterrupt()
